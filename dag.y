@@ -8,6 +8,7 @@ DAGNodes dag;
 %}
 %start line
 %token  ID
+%token  NUM
 %left '+' '-'
 %left '*' '/'
 %%                   /* beginning of rules section */
@@ -67,6 +68,16 @@ expr:   expr '+' expr   {
                               	$$=dag.insert(*id);
                              
                            }
+        |  NUM             {
+                             Node *id = new Node(NUMBER,$1);
+                             int index;
+                             index= dag.search(*id);
+                             if(index!=-1)
+                             	$$=index;
+                             else 
+                              	$$=dag.insert(*id);
+                             
+                           }                   
         | '(' expr ')'     {
                                  $$=$2;
                             }
