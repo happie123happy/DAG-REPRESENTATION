@@ -18,6 +18,6 @@ SymbolTable gTable;
 
                                 return ID;
                             }
-[+=()]                       { return yytext[0];}
+[-*/%+=()]                       { return yytext[0];}
  \n                        { return yytext[0];}
 %%

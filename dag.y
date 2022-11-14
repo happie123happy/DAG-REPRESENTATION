@@ -8,7 +8,8 @@ DAGNodes dag;
 %}
 %start line
 %token  ID
-%left '+'
+%left '+' '-'
+%left '*' '/'
 %%                   /* beginning of rules section */
 line  : assignment '\n' { dag.print(); }
 assignment: ID '=' expr  {
@@ -24,6 +25,36 @@ expr:   expr '+' expr   {
                              	$$=index;
                              else 
                               	$$=dag.insert(*plus);
+                                    
+                          }
+        | expr '-' expr   {
+                           Node *minus = new Node(MINUS,$1,$3);
+                             int index;
+                             index= dag.search(*minus);
+                             if(index!=-1)
+                             	$$=index;
+                             else 
+                              	$$=dag.insert(*minus);
+                                    
+                          }
+        | expr '*' expr   {
+                           Node *m = new Node(MULTIPLY,$1,$3);
+                             int index;
+                             index= dag.search(*m);
+                             if(index!=-1)
+                             	$$=index;
+                             else 
+                              	$$=dag.insert(*m);
+                                    
+                          }
+        | expr '/' expr   {
+                           Node *m = new Node(DIVIDE,$1,$3);
+                             int index;
+                             index= dag.search(*m);
+                             if(index!=-1)
+                             	$$=index;
+                             else 
+                              	$$=dag.insert(*m);
                                     
                           }
         |  ID             {
